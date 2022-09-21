@@ -18,7 +18,7 @@ class StudentController extends Controller
     public function index()
     {
         $data = Student::get();
-        return view('pages.list', compact('data'));
+        return view('pages.student.list', compact('data'));
     }
 
     /**
@@ -30,7 +30,7 @@ class StudentController extends Controller
     {
         $student = new Student();
 
-        return view('pages.form', [
+        return view('pages.student.form', [
             'student' => $student
         ]);
     }
@@ -68,7 +68,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('pages.form', [
+        return view('pages.student.form', [
             'student' => $student
         ]);
     }
