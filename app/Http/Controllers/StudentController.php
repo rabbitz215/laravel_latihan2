@@ -28,7 +28,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('pages.form');
+        $student = new Student();
+
+        return view('pages.form', [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -42,7 +46,7 @@ class StudentController extends Controller
         // dd($request->all());
         $data = $request->all();
         Student::create($data);
-        return redirect('student');
+        return redirect()->route('student.index')->with('notif', 'Data Berhasil di Input');
     }
 
     /**
@@ -64,7 +68,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return view('pages.form', [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -76,7 +82,10 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        $data = $request->all();
+        $student->update($data);
+
+        return redirect()->route('student.index')->with('notif', 'Data Berhasil di Update');
     }
 
     /**
