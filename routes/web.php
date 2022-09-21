@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 
 /*
@@ -30,3 +31,5 @@ Route::get('/layanan', [HomeController::class, 'courses'])->name('courses');
 // Route::delete('/student/{id}', [StudentController::class, 'destroy']);
 
 Route::resource('/student', StudentController::class);
+
+Route::resource('/major', MajorController::class);
