@@ -66,7 +66,9 @@ class MajorController extends Controller
      */
     public function edit(Major $major)
     {
-        //
+        return view('pages.major.form', [
+            'major' => $major
+        ]);
     }
 
     /**
@@ -78,7 +80,9 @@ class MajorController extends Controller
      */
     public function update(UpdateMajorRequest $request, Major $major)
     {
-        //
+        $major->update($request->all());
+
+        return redirect()->route('major.index')->with('notif', 'Data Berhasil di Update');
     }
 
     /**

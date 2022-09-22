@@ -18,7 +18,7 @@
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Major Description</label>
-        <textarea name="description" id="" class="form-control" cols="300" rows="5"></textarea>
+        <textarea name="description" id="" class="form-control" cols="300" rows="5">{{ $major->description }}</textarea>
         @error('description')
             <div class="text-muted text-danger">{{ $message }}</div>
         @enderror
