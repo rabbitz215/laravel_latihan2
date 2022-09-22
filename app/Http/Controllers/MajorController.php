@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use App\Http\Requests\StoreMajorRequest;
 use App\Http\Requests\UpdateMajorRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class MajorController extends Controller
 {
@@ -93,6 +94,8 @@ class MajorController extends Controller
      */
     public function destroy(Major $major)
     {
-        //
+        $major->delete();
+
+        return redirect()->route('major.index')->with('notif', 'Data Berhasil di Delete');
     }
 }
