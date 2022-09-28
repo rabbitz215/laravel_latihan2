@@ -24,6 +24,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->description }}</td>
                     <td>
+                        <a href="{{ route('major.show', ['major' => $item->id]) }}" class="btn btn-warning">Students</a>
                         <a href="{{ route('major.edit', ['major' => $item->id]) }}" class="btn btn-primary">Edit</a>
                         <form action="{{ route('major.destroy', ['major' => $item->id]) }}" class="d-inline" method="POST">
                             @csrf

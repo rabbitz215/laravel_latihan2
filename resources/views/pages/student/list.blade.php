@@ -27,7 +27,7 @@
                     <td>{{ $item['name'] }}</td>
                     <td>{{ $item['gender'] == 'female' ? 'Female' : 'Male' }}</td>
                     <td>{{ $item['address'] }}</td>
-                    <td>{{ $item->major }}</td>
+                    <td>{{ $item->major->name }}</td>
                     <td>{{ $item->date_birth }}</td>
                     <td>
                         <a href="{{ route('student.edit', ['student' => $item->id]) }}" class="btn btn-primary">Edit</a>

@@ -35,12 +35,11 @@
     </div>
     <div class="mb-3">
         <label for="major" class="form-label">Major</label>
-        <select name="major" class="form-select">
-            <option value="Informatic Computer" {{ $student->major == 'Informatic Computer' ? 'selected' : '' }}>
-                Informatic Computer</option>
-            <option value="Accounting" {{ $student->major == 'Accounting' ? 'selected' : '' }}>Accounting</option>
-            <option value="Office Management" {{ $student->major == 'Office Management' ? 'selected' : '' }}>Office
-                Management</option>
+        <select name="major_id" class="form-select">
+            @foreach ($majors as $major)
+                <option value="{{ $major->id }}" {{ $student->major_id == $major->id ? 'selected' : '' }}>
+                    {{ $major->name }}</option>
+            @endforeach
         </select>
         @error('major')
             <div class="text-muted text-danger">{{ $message }}</div>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
 use App\Models\Student;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Redis;
 
 class StudentController extends Controller
 {
@@ -17,7 +18,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $data = Student::get();
+        $data = Student::with(['major'])->get();
         return view('pages.student.list', compact('data'), [
             'judul' => "List Student"
         ]);
@@ -31,10 +32,12 @@ class StudentController extends Controller
     public function create()
     {
         $student = new Student();
+        $majors = Major::all();
 
         return view('pages.student.form', [
             'student' => $student,
-            'judul' => "Create Form Student"
+            'judul' => "Create Form Student",
+            'majors' => $majors
         ]);
     }
 
@@ -71,9 +74,12 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        $majors = Major::all();
+
         return view('pages.student.form', [
             'student' => $student,
-            'judul' => "Edit Form Student"
+            'judul' => "Edit Form Student",
+            'majors' => $majors
         ]);
     }
 
