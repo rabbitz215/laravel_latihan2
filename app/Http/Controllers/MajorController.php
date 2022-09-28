@@ -17,7 +17,8 @@ class MajorController extends Controller
     public function index()
     {
         return view('pages.major.list', [
-            'major' => Major::get()
+            'major' => Major::get(),
+            'judul' => "List Major"
         ]);
     }
 
@@ -30,7 +31,8 @@ class MajorController extends Controller
     {
         $major = new Major();
         return view('pages.major.form', [
-            'major' => $major
+            'major' => $major,
+            'judul' => "Create Form Major"
         ]);
     }
 
@@ -68,7 +70,8 @@ class MajorController extends Controller
     public function edit(Major $major)
     {
         return view('pages.major.form', [
-            'major' => $major
+            'major' => $major,
+            'judul' => "Edit Form Major"
         ]);
     }
 
