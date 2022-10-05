@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Major;
 use App\Models\Student;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreStudentRequest;
@@ -16,11 +17,35 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Student::with(['major'])->paginate(10);
+        $search = $request->input('search');
+        $filter = $request->input('filter');
+        $data = Student::with(['major']);
+
+        // if ($search) {
+        //     $data->where('name', 'like', "%$search%")
+        //         ->orWhere('address', 'like', "%$search%")
+        //         ->where('majors_id', '=', "$filter");
+        // }
+
+        if ($search) {
+            $data->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('address', 'like', "%$search%");
+            });
+        }
+
+        if ($filter) {
+            $data->where(function ($query) use ($filter) {
+                $query->where('major_id', '=', $filter);
+            });
+        }
+
+        $data = $data->paginate(10);
         return view('pages.student.list', compact('data'), [
-            'judul' => "List Student"
+            'judul' => "List Student",
+            'majors' => Major::get()
         ]);
     }
 

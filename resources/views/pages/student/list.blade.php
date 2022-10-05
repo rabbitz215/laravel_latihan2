@@ -8,6 +8,25 @@
         </div>
     @endif
     <a href="{{ route('student.create') }}" class="btn btn-primary mb-3">Input</a>
+    <form class="row g-3" action="{{ route('student.index') }}" method="GET">
+        <div class="col-auto">
+            <select name="filter" id="filter" class="form-select">
+                <option value="">All</option>
+                @foreach ($majors as $major)
+                    <option value="{{ $major->id }}" {{ request('filter') == $major->id ? 'selected' : '' }}>
+                        {{ $major->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="search" class="visually-hidden"></label>
+            <input type="text" name="search" class="form-control" id="search" placeholder="Search"
+                value="{{ request('search') }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Cari</button>
+        </div>
+    </form>
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
@@ -42,5 +61,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $data->links() }}
+    {{ $data->withQueryString()->links() }}
 @endsection
