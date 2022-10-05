@@ -23,7 +23,7 @@
         <tbody>
             @foreach ($data as $item)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
+                    <th scope="row">{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</th>
                     <td>{{ $item['name'] }}</td>
                     <td>{{ $item['gender'] == 'female' ? 'Female' : 'Male' }}</td>
                     <td>{{ $item['address'] }}</td>
@@ -42,4 +42,5 @@
             @endforeach
         </tbody>
     </table>
+    {{ $data->links() }}
 @endsection
