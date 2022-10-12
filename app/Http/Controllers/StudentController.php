@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreStudentRequest;
@@ -76,6 +77,10 @@ class StudentController extends Controller
     {
         // dd($request->all());
         $data = $request->all();
+        $image = $request->file('image');
+        if ($image) {
+            $data['image'] = $image->store('images/student', 'public');
+        }
         Student::create($data);
         return redirect()->route('student.index')->with('notif', 'Data Berhasil di Input');
     }
@@ -118,6 +123,17 @@ class StudentController extends Controller
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $data = $request->all();
+        $image = $request->file('image');
+        if ($image) {
+            // cek apakah file lama ada didalam folder?
+            $exists = File::exists(storage_path('app/public/') . $student->image);
+            if ($exists) {
+                // delete file lama tersebut
+                File::delete(storage_path('app/public/') . $student->image);
+            }
+            // upload file baru
+            $data['image'] = $image->store('images/student', 'public');
+        }
         $student->update($data);
 
         return redirect()->route('student.index')->with('notif', 'Data Berhasil di Update');
@@ -132,6 +148,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
+        File::delete(storage_path('app/public/') . $student->image);
 
         return redirect()->route('student.index')->with('notif', 'Data Berhasil di Delete');
     }

@@ -3,10 +3,10 @@
 @section('content')
     <h1>{{ $student->id ? 'Edit Data' : 'Create Data' }}</h1>
     @if ($student->id)
-        <form action="{{ route('student.update', ['student' => $student->id]) }}" method="POST">
+        <form action="{{ route('student.update', ['student' => $student->id]) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
         @else
-            <form action="{{ route('student.store') }}" method="POST">
+            <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
     @endif
     @csrf
     <div class="mb-3">
@@ -49,6 +49,16 @@
         <label for="date_birth" class="form-label">Date Birth</label>
         <input type="date" class="form-control" name="date_birth" value="{{ $student->date_birth }}">
         @error('date_birth')
+            <div class="text-muted text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        @if ($student->image != null)
+            <br><img src="/storage/{{ $student->image }}" alt="" width="200px" class="img-thumbnail mb-2">
+        @endif
+        <input type="file" class="form-control" name="image">
+        @error('image')
             <div class="text-muted text-danger">{{ $message }}</div>
         @enderror
     </div>

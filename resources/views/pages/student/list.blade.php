@@ -36,6 +36,7 @@
                 <th scope="col">Address</th>
                 <th scope="col">Major</th>
                 <th scope="col">Date Birth</th>
+                <th scope="col">Image</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -48,6 +49,7 @@
                     <td>{{ $item['address'] }}</td>
                     <td>{{ $item->major->name }}</td>
                     <td>{{ $item->date_birth }}</td>
+                    <td><img src="/storage/{{ $item->image }}" alt="" width="75px"></td>
                     <td>
                         <a href="{{ route('student.edit', ['student' => $item->id]) }}" class="btn btn-primary">Edit</a>
                         <form action="{{ route('student.destroy', ['student' => $item->id]) }}" class="d-inline"
